@@ -1,23 +1,19 @@
-# @tsonic/runtime
+# @tsonic/types
 
-TypeScript type definitions for CLR/.NET runtime primitives.
-
-## Overview
-
-`@tsonic/runtime` provides branded primitive types that match CLR/.NET types, enabling type-safe interop between TypeScript and .NET while remaining compatible with JavaScript primitives at runtime.
+TypeScript type definitions for CLR/.NET primitives.
 
 ## Installation
 
 ```bash
-npm install @tsonic/runtime
+npm install @tsonic/types
 ```
 
 ## Usage
 
-### Named Imports (Recommended)
+### Named Imports
 
 ```typescript
-import { int, decimal, bool, long } from "@tsonic/runtime";
+import { int, decimal, bool, long } from "@tsonic/types";
 
 const age: int = 42 as int;
 const price: decimal = 99.99 as decimal;
@@ -25,14 +21,14 @@ const isActive: bool = true as bool;
 const timestamp: long = Date.now() as long;
 ```
 
-### Global/Ambient Types
+### Global Types
 
 Add to your `tsconfig.json`:
 
 ```json
 {
   "compilerOptions": {
-    "types": ["@tsonic/runtime/global"]
+    "types": ["@tsonic/types/global"]
   }
 }
 ```
@@ -40,9 +36,9 @@ Add to your `tsconfig.json`:
 Or use a triple-slash reference:
 
 ```typescript
-/// <reference types="@tsonic/runtime/global" />
+/// <reference types="@tsonic/types/global" />
 
-const count: int = 10 as int;  // No import needed
+const count: int = 10 as int;
 ```
 
 ## Available Types
@@ -80,41 +76,37 @@ const count: int = 10 as int;  // No import needed
 | `bool` | `System.Boolean` | Boolean value |
 | `char` | `System.Char` | Single UTF-16 code unit |
 
-## How It Works
+## Implementation
 
-These types use TypeScript's branded types pattern:
+These types use TypeScript's branded types pattern to provide type safety without runtime overhead:
 
 ```typescript
 export type int = number & { __brand: "int" };
 ```
 
-This provides:
-- ✅ **Type safety** - `int` and `long` are not interchangeable
-- ✅ **Runtime compatibility** - Still JavaScript `number` at runtime
-- ✅ **Zero overhead** - No runtime wrappers or classes
-- ✅ **IDE support** - Full autocomplete and type checking
+The types are distinguishable at compile time but compile down to standard JavaScript primitives. There are no wrapper classes or runtime checks.
 
 ## Examples
 
 ### Type Safety
 
 ```typescript
-import { int, long } from "@tsonic/runtime";
+import { int, long } from "@tsonic/types";
 
 const age: int = 42 as int;
 const timestamp: long = Date.now() as long;
 
-// ❌ Type error: Type 'long' is not assignable to type 'int'
+// Type error: Type 'long' is not assignable to type 'int'
 const invalid: int = timestamp;
 
-// ✅ Explicit cast required
+// Explicit cast required
 const valid: int = timestamp as unknown as int;
 ```
 
 ### Collections
 
 ```typescript
-import { int, decimal } from "@tsonic/runtime";
+import { int, decimal } from "@tsonic/types";
 
 const scores: Array<int> = [95, 87, 92].map(x => x as int);
 const prices: Array<decimal> = [9.99, 14.99].map(x => x as decimal);
@@ -123,7 +115,7 @@ const prices: Array<decimal> = [9.99, 14.99].map(x => x as decimal);
 ### Function Parameters
 
 ```typescript
-import { int, bool } from "@tsonic/runtime";
+import { int, bool } from "@tsonic/types";
 
 function setAge(age: int): void {
   console.log(`Age set to ${age}`);
@@ -137,24 +129,6 @@ setAge(25 as int);
 const result: bool = isValid(10 as int);
 ```
 
-## TypeScript Configuration
-
-For best results, configure TypeScript:
-
-```json
-{
-  "compilerOptions": {
-    "strict": true,
-    "types": ["@tsonic/runtime/global"]
-  }
-}
-```
-
 ## License
 
 MIT
-
-## Related Projects
-
-- [Tsonic](https://github.com/tsoniclang/tsonic) - TypeScript to C# compiler
-- [tsbindgen](https://github.com/tsoniclang/tsbindgen) - TypeScript declaration generator for .NET assemblies
