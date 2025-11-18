@@ -1,5 +1,5 @@
 /**
- * @tsonic/runtime - Global/Ambient Declarations
+ * @tsonic/types - Global/Ambient Declarations
  *
  * Use this for ambient/global type availability without explicit imports.
  *
@@ -7,14 +7,14 @@
  * ```json
  * {
  *   "compilerOptions": {
- *     "types": ["@tsonic/runtime/global"]
+ *     "types": ["@tsonic/types/global"]
  *   }
  * }
  * ```
  *
  * Or via triple-slash reference:
  * ```typescript
- * /// <reference types="@tsonic/runtime/global" />
+ * /// <reference types="@tsonic/types/global" />
  * ```
  */
 

@@ -1,12 +1,12 @@
 /**
- * @tsonic/runtime
+ * @tsonic/types
  *
  * TypeScript type definitions for CLR/.NET runtime primitives.
  * These branded types provide type safety while remaining compatible with JavaScript primitives.
  *
  * @example
  * ```typescript
- * import { int, decimal, bool } from "@tsonic/runtime";
+ * import { int, decimal, bool } from "@tsonic/types";
  *
  * const age: int = 42 as int;
  * const price: decimal = 99.99 as decimal;

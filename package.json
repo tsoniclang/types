@@ -1,6 +1,6 @@
 {
-  "name": "@tsonic/runtime",
-  "version": "0.1.0",
+  "name": "@tsonic/types",
+  "version": "0.1.1",
   "description": "TypeScript type definitions for CLR/.NET runtime primitives",
   "type": "module",
   "types": "./index.d.ts",
@@ -33,10 +33,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tsoniclang/runtime.git"
+    "url": "https://github.com/tsoniclang/types.git"
   },
   "bugs": {
-    "url": "https://github.com/tsoniclang/runtime/issues"
+    "url": "https://github.com/tsoniclang/types/issues"
   },
-  "homepage": "https://github.com/tsoniclang/runtime#readme"
+  "homepage": "https://github.com/tsoniclang/types#readme"
 }
