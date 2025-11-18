@@ -1,0 +1,42 @@
+{
+  "name": "@tsonic/runtime",
+  "version": "0.1.0",
+  "description": "TypeScript type definitions for CLR/.NET runtime primitives",
+  "type": "module",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts"
+    },
+    "./global": {
+      "types": "./global.d.ts"
+    }
+  },
+  "files": [
+    "index.d.ts",
+    "global.d.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "typescript",
+    "dotnet",
+    "clr",
+    "runtime",
+    "primitives",
+    "branded-types",
+    "interop",
+    "csharp",
+    "tsonic"
+  ],
+  "author": "Tsonic Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tsoniclang/runtime.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tsoniclang/runtime/issues"
+  },
+  "homepage": "https://github.com/tsoniclang/runtime#readme"
+}

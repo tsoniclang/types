@@ -1,0 +1,8 @@
+# Development files
+.git
+.gitignore
+tsconfig.json
+
+# Documentation (included via package.json files array)
+*.md
+!README.md
