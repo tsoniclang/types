@@ -44,4 +44,12 @@ declare type decimal = number & { __brand: "decimal" }; // System.Decimal (128-b
 declare type bool = boolean & { __brand: "bool" };    // System.Boolean
 declare type char = string & { __brand: "char" };     // System.Char (single UTF-16 code unit)
 
+// Parameter modifiers (ref/out/in)
+declare type ref<T> = T & { __ref?: never };          // ref parameter modifier
+declare type out<T> = T & { __out?: never };          // out parameter modifier
+declare type In<T> = T & { __in?: never };            // in parameter modifier (readonly ref)
+
+// Pointer type
+declare type ptr<T> = unknown & { readonly __ptr: unique symbol };  // C# unsafe pointer (required brand)
+
 export {};
