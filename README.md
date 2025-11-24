@@ -76,6 +76,20 @@ const count: int = 10 as int;
 | `bool` | `System.Boolean` | Boolean value |
 | `char` | `System.Char` | Single UTF-16 code unit |
 
+### Parameter Modifiers
+
+| Type | C# Modifier | Description |
+|------|-------------|-------------|
+| `ref<T>` | `ref` | Reference parameter (read/write) |
+| `out<T>` | `out` | Output parameter (write-only) |
+| `In<T>` | `in` | Readonly reference parameter |
+
+### Unsafe Types
+
+| Type | C# Type | Description |
+|------|---------|-------------|
+| `ptr<T>` | `T*` | Unsafe pointer type |
+
 ## Implementation
 
 These types use TypeScript's branded types pattern to provide type safety without runtime overhead:
@@ -127,6 +141,45 @@ function isValid(value: int): bool {
 
 setAge(25 as int);
 const result: bool = isValid(10 as int);
+```
+
+### Parameter Modifiers
+
+```typescript
+import { int, ref, out, In } from "@tsonic/types";
+
+// ref parameter - can read and write
+function swap(a: ref<int>, b: ref<int>): void {
+  const temp = a;
+  a = b;
+  b = temp;
+}
+
+// out parameter - must write before return
+function tryParse(input: string, value: out<int>): bool {
+  // Parser sets value through out parameter
+  return true as bool;
+}
+
+// in parameter - readonly reference
+function process(data: In<Array<int>>): void {
+  // Can read data but not modify it
+  console.log(data);
+}
+```
+
+### Unsafe Pointers
+
+```typescript
+import { ptr, int } from "@tsonic/types";
+
+// Pointer types require explicit handling
+declare function getPointer(): ptr<int>;
+declare function dereferenceInt(p: ptr<int>): int;
+
+const pointer = getPointer();
+// pointer is ptr<int>, not directly usable as int
+const value = dereferenceInt(pointer); // Explicit dereference required
 ```
 
 ## License

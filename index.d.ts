@@ -46,3 +46,9 @@ export type char = string & { __brand: "char" };     // System.Char (single UTF-
 export type ref<T> = T & { __ref?: never };          // ref parameter modifier
 export type out<T> = T & { __out?: never };          // out parameter modifier
 export type In<T> = T & { __in?: never };            // in parameter modifier (readonly ref)
+
+// Pointer type
+// Represents C# unsafe pointer types (T*, void*, int*, etc.)
+// Erases to unknown for type safety - requires explicit handling
+// Uses required brand to prevent accidental assignment
+export type ptr<T> = unknown & { readonly __ptr: unique symbol };
