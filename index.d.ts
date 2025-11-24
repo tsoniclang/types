@@ -39,3 +39,10 @@ export type decimal = number & { __brand: "decimal" }; // System.Decimal (128-bi
 // Other primitive types
 export type bool = boolean & { __brand: "bool" };    // System.Boolean
 export type char = string & { __brand: "char" };     // System.Char (single UTF-16 code unit)
+
+// Parameter modifiers (ref/out/in)
+// These phantom types tell the compiler to emit ref/out/in modifiers in C#
+// Uses different phantom properties to avoid collision with __brand
+export type ref<T> = T & { __ref?: never };          // ref parameter modifier
+export type out<T> = T & { __out?: never };          // out parameter modifier
+export type In<T> = T & { __in?: never };            // in parameter modifier (readonly ref)
