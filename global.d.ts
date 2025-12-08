@@ -3,10 +3,12 @@
  *
  * Use this for ambient/global type availability without explicit imports.
  *
- * IMPORTANT: These are simple type aliases, NOT branded types.
- * TypeScript treats all numeric types as `number` - this is intentional.
- * Tsonic enforces numeric correctness at compile time via a proof system,
- * independent of TypeScript's structural typing.
+ * IMPORTANT: These are simple type aliases with NO runtime enforcement.
+ * TypeScript treats all numeric types as `number`, bool as `boolean`, etc.
+ * Tsonic enforces semantic correctness at compile time via its proof system.
+ *
+ * TypeScript will NOT catch type errors between int/byte/long etc.
+ * Only Tsonic compilation validates numeric correctness.
  *
  * Usage in tsconfig.json:
  * ```json
@@ -46,15 +48,15 @@ declare type double = number;   // System.Double (64-bit float)
 declare type decimal = number;  // System.Decimal (128-bit decimal)
 
 // Other primitive types
-declare type bool = boolean & { __brand: "bool" };    // System.Boolean
-declare type char = string & { __brand: "char" };     // System.Char (single UTF-16 code unit)
-
-// Parameter modifiers (ref/out/in)
-declare type ref<T> = T & { __ref?: never };          // ref parameter modifier
-declare type out<T> = T & { __out?: never };          // out parameter modifier
-declare type In<T> = T & { __in?: never };            // in parameter modifier (readonly ref)
+declare type bool = boolean;    // System.Boolean
+declare type char = string;     // System.Char (single UTF-16 code unit)
+                                // Tsonic enforces char must be length-1 literal or proven conversion
 
 // Pointer type
-declare type ptr<T> = unknown & { readonly __ptr: unique symbol };  // C# unsafe pointer (required brand)
+declare type ptr<T> = unknown;  // C# unsafe pointer types (T*, void*, int*, etc.)
+
+// NOTE: ref<T>, out<T>, In<T> have been removed.
+// Parameter modifiers will be expressed via syntax, not types.
+// See spec for forthcoming ref/out/in parameter syntax.
 
 export {};
