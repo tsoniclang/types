@@ -1,6 +1,6 @@
 {
   "name": "@tsonic/types",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "TypeScript type definitions for CLR/.NET runtime primitives",
   "type": "module",
   "types": "./index.d.ts",
