@@ -1,20 +1,22 @@
 /**
  * @tsonic/types
  *
- * TypeScript type definitions for CLR/.NET runtime primitives.
+ * TypeScript type aliases for CLR/.NET runtime primitives.
  *
- * IMPORTANT: These are simple type aliases, NOT branded types.
- * TypeScript treats all numeric types as `number` - this is intentional.
- * Tsonic enforces numeric correctness at compile time via a proof system,
- * independent of TypeScript's structural typing.
+ * IMPORTANT: These are simple type aliases with NO runtime enforcement.
+ * TypeScript treats all numeric types as `number`, bool as `boolean`, etc.
+ * Tsonic enforces semantic correctness at compile time via its proof system.
+ *
+ * TypeScript will NOT catch type errors between int/byte/long etc.
+ * Only Tsonic compilation validates numeric correctness.
  *
  * @example
  * ```typescript
  * import { int, float, bool } from "@tsonic/types";
  *
- * const age: int = 42 as int;      // Tsonic validates 42 fits in Int32
+ * const age: int = 42 as int;        // Tsonic validates 42 fits in Int32
  * const temp: float = 98.6 as float; // Tsonic validates for Single
- * const isActive: bool = true as bool;
+ * const isActive: bool = true;       // bool is just boolean
  * ```
  */
 
@@ -41,18 +43,15 @@ export type double = number;   // System.Double (64-bit float)
 export type decimal = number;  // System.Decimal (128-bit decimal)
 
 // Other primitive types
-export type bool = boolean & { __brand: "bool" };    // System.Boolean
-export type char = string & { __brand: "char" };     // System.Char (single UTF-16 code unit)
-
-// Parameter modifiers (ref/out/in)
-// These phantom types tell the compiler to emit ref/out/in modifiers in C#
-// Uses different phantom properties to avoid collision with __brand
-export type ref<T> = T & { __ref?: never };          // ref parameter modifier
-export type out<T> = T & { __out?: never };          // out parameter modifier
-export type In<T> = T & { __in?: never };            // in parameter modifier (readonly ref)
+export type bool = boolean;    // System.Boolean
+export type char = string;     // System.Char (single UTF-16 code unit)
+                               // Tsonic enforces char must be length-1 literal or proven conversion
 
 // Pointer type
 // Represents C# unsafe pointer types (T*, void*, int*, etc.)
 // Erases to unknown for type safety - requires explicit handling
-// Uses required brand to prevent accidental assignment
-export type ptr<T> = unknown & { readonly __ptr: unique symbol };
+export type ptr<T> = unknown;
+
+// NOTE: ref<T>, out<T>, In<T> have been removed.
+// Parameter modifiers will be expressed via syntax, not types.
+// See spec for forthcoming ref/out/in parameter syntax.
